@@ -19,23 +19,24 @@ public extension HTTPHandler {
             self.state.requestReceived()
             stringBody = ""
             receivedData = nil
-            parser = ParserMultipart(boundary: "X-INSOMNIA-BOUNDARY")
+            parser = ParserMultipart(boundary: "--X-INSOMNIA-BOUNDARY")
         case .body(buffer: var buf):
-            //print(buf.readString(length: 100))
-            parser?.append(buffer: buf)
-            /*guard let received = buf.readBytes(length: buf.readableBytes) else {
+            parser?.append(buffer: buf) { (parts) in
+                print("return parts")
+            }
+            guard let received = buf.readBytes(length: buf.readableBytes) else {
                 return
             }
             if (receivedData == nil ){
                 receivedData = Data(bytes: received, count: received.count)
             }else{
                 receivedData?.append(Data(bytes: received, count: received.count))
-            }*/
+            }
         case .end:
-            var partMultipart = parser?.getParts()
+            parser?.getParts()
             self.state.requestComplete()
             self.buffer.clear()
-            //self.buffer.writeBytes(receivedData!)
+            self.buffer.writeBytes(receivedData!)
             var headers = HTTPHeaders()
             headers.add(name: "Content-Length", value: "\(receivedData!.count)")
             context.write(self.wrapOutboundOut(.head(httpResponseHead(request: self.infoSavedRequestHead!, status: .ok, headers: headers))), promise: nil)

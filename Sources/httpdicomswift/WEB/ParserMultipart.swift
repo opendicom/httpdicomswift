@@ -11,13 +11,14 @@ import NIO
 struct ParserMultipart {
     
     private var multipart: Data?
+    private var parts: [Data]?
     private let boundary: String
     
     init(boundary: String){
         self.boundary = boundary
     }
     
-    mutating func append(buffer: ByteBuffer){
+    mutating func append(buffer: ByteBuffer, returnParts: (_: [Data]?) -> Void ) {
         var buf = buffer
         guard let received = buf.readBytes(length: buf.readableBytes) else {
             return
@@ -27,13 +28,10 @@ struct ParserMultipart {
         }else{
             self.multipart?.append(Data(bytes: received, count: received.count))
         }
-        
+        let rangea = self.multipart?.range(of: self.boundary.data(using: String.Encoding.ascii)!)
+        let rangeb = self.multipart?.range(of: self.boundary.data(using: String.Encoding.ascii)!, options: .backwards)
+        print(rangea)
+        print(rangeb)
+        returnParts(parts)
     }
-    
-    func getParts() -> [Data]? {
-        //let parts: [Data]? = self.multipart?.split(whereSeparator: { $0 == "a" })
-        return parts
-    }
-    
-
 }
