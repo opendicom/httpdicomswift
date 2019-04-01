@@ -19,16 +19,16 @@ public extension HTTPHandler {
             self.state.requestReceived()
             stringBody = ""
             receivedData = nil
-            parser = ParserMultipart(boundary: "--X-INSOMNIA-BOUNDARY")
+            parser = ParserMultipart(boundary: "X-INSOMNIA-BOUNDARY")
         case .body(buffer: var buf):
-            parser?.append(buffer: buf) { (parts) in
+            parser?.append(buffer: buf)/* { (parts) in
                 if parts?.count ?? 0 > 0 {
                     print("return parts")
                 }else{
                     print("NO return parts")
                 }
                 
-            }
+            }*/
             guard let received = buf.readBytes(length: buf.readableBytes) else {
                 return
             }
