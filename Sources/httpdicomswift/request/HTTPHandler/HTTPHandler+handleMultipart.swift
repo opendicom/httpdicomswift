@@ -22,7 +22,12 @@ public extension HTTPHandler {
             parser = ParserMultipart(boundary: "--X-INSOMNIA-BOUNDARY")
         case .body(buffer: var buf):
             parser?.append(buffer: buf) { (parts) in
-                print("return parts")
+                if parts?.count ?? 0 > 0 {
+                    print("return parts")
+                }else{
+                    print("NO return parts")
+                }
+                
             }
             guard let received = buf.readBytes(length: buf.readableBytes) else {
                 return
@@ -33,7 +38,6 @@ public extension HTTPHandler {
                 receivedData?.append(Data(bytes: received, count: received.count))
             }
         case .end:
-            parser?.getParts()
             self.state.requestComplete()
             self.buffer.clear()
             self.buffer.writeBytes(receivedData!)
