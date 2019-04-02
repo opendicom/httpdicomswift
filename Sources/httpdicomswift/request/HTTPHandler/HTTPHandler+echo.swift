@@ -14,37 +14,25 @@ public extension HTTPHandler {
    // - at least once with property .head,
    // - zero or more times with property .body
    // - and once with property .end
-    func handleEcho(
+    func echo(
       context: ChannelHandlerContext,
       request: HTTPServerRequestPart
       ) {
         switch request {
         case .head(let request):
             print("head")
-            self.infoSavedRequestHead = request
-            self.infoSavedBodyBytes = 0
-            self.keepAlive = request.isKeepAlive
             self.state.requestReceived()
+         context.write(self.wrapOutboundOut(.head(httpResponseHead(request: request, status: .ok, headers: HTTPHeaders()))), promise: nil)
+
         case .body(buffer: let buf):
             print("body")
-            self.infoSavedBodyBytes += buf.readableBytes
-            print(self.infoSavedBodyBytes.description)
             print(buf.debugDescription)
-        case .end:
-            self.state.requestComplete()
-            self.buffer.clear()
+            context.write(self.wrapOutboundOut(
+            .body(.byteBuffer(buf))), promise: nil)
 
-            
-            let response = "echo"
-            self.buffer.writeString(response)
-            
-            
-            var headers = HTTPHeaders()
-            headers.add(name: "Content-Length", value: "\(response.utf8.count)")
-         
-            context.write(self.wrapOutboundOut(.head(httpResponseHead(request: self.infoSavedRequestHead!, status: .ok, headers: headers))), promise: nil)
-            
-            context.write(self.wrapOutboundOut(.body(.byteBuffer(self.buffer))), promise: nil)
+        case .end:
+            print("end")
+            self.state.requestComplete()
             self.completeResponse(context, trailers: nil, promise: nil)
         }
     }
