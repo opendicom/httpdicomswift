@@ -19,16 +19,15 @@ public extension HTTPHandler {
             self.state.requestReceived()
             stringBody = ""
             receivedData = nil
-            parser = ParserMultipart(boundary: "X-INSOMNIA-BOUNDARY")
-        case .body(buffer: var buf):
-            parser?.append(buffer: buf)/* { (parts) in
-                if parts?.count ?? 0 > 0 {
-                    print("return parts")
-                }else{
-                    print("NO return parts")
+            let content_type = request.headers["content-type"][0].split(separator: ";")
+            for value in content_type {
+                if value.contains("boundary="){
+                    print("encontro el boudary")
+                    parser = ParserMultipart(boundary: String(value[(value.range(of: "boundary=")?.upperBound...)!]))
                 }
-                
-            }*/
+            }
+        case .body(buffer: var buf):
+            parser?.append(buffer: buf)
             guard let received = buf.readBytes(length: buf.readableBytes) else {
                 return
             }

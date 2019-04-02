@@ -15,10 +15,11 @@ struct ParserMultipart {
     var data: Data
     
     init(boundary: String){
-        self.boundary = "--\(boundary)\r\n"
+        self.boundary = "\r\n--\(boundary)\r\n"
         self.endBoundary = "\r\n--\(boundary)--"
         self.data = Data()
     }
+    
     
     mutating func append(buffer: ByteBuffer) {
         var buf = buffer
@@ -29,11 +30,11 @@ struct ParserMultipart {
         if data.starts(with: self.boundary.data(using: String.Encoding.ascii)!){
             print("inicio de boundary")
             data.removeSubrange(0...self.boundary.count)
-        }else{
             let rangeendpart = data.range(of: self.boundary.data(using: String.Encoding.ascii)!)
             print(rangeendpart)
             let rangeendpartmulti = data.range(of: self.endBoundary.data(using: String.Encoding.ascii)!)
             print(rangeendpartmulti)
+        }else{
             
         }
         
