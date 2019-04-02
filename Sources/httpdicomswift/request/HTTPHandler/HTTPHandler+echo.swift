@@ -27,7 +27,6 @@ public extension HTTPHandler {
         case .body(buffer: let buf):
             print("body")
             print(buf.debugDescription)
-            print(buf.description)
             context.write(self.wrapOutboundOut(
             .body(.byteBuffer(buf))), promise: nil)
 

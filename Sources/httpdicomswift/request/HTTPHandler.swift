@@ -89,18 +89,20 @@ public class HTTPHandler: ChannelInboundHandler {
         }
         switch reqPart {
         case .head(let request):
-            print(request.uri)
-            print(request.headers["content-type"][0])
-            print(request.method)
-            if request.uri.starts(with: "/echo"){
+            print(request.description)
+            if request.uri.starts(with: "/handleEcho"){
                 self.handler = self.handleEcho
                 self.handler!(context, reqPart)
                 return
-            }else if request.uri.starts(with: "/json"){
+            }else if request.uri.starts(with: "/echo"){
+               self.handler = self.echo
+               self.handler!(context, reqPart)
+               return
+            }else if request.uri.starts(with: "/handleJSON"){
                 self.handler = self.handleJSON
                 self.handler!(context, reqPart)
                 return
-            }else if request.uri.starts(with: "/multipart"){
+            }else if request.uri.starts(with: "/handleMultipart"){
                 self.handler = self.handleMultipart
                 self.handler!(context, reqPart)
                 return
