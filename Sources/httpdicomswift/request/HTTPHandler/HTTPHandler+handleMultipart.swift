@@ -21,8 +21,7 @@ public extension HTTPHandler {
             receivedData = nil
             let content_type = request.headers["content-type"][0].split(separator: ";")
             for value in content_type {
-                if value.contains("boundary="){
-                    print("encontro el boudary")
+                if value.contains("boundary="){                    
                     parser = ParserMultipart(boundary: String(value[(value.range(of: "boundary=")?.upperBound...)!]))
                 }
             }

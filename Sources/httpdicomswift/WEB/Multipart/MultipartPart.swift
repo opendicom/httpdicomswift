@@ -10,15 +10,15 @@ import Foundation
 
 struct MultipartPart {
     
-    let content_type: String
-    let data: Data
+    var content_type: Data
+    var data: Data
     
     init(){
-        self.content_type = ""
+        self.content_type = Data()
         self.data = Data()
     }
     
-    init(content_type: String, data: Data){
+    init(content_type: Data, data: Data){
         self.content_type = content_type
         self.data = data
     }
