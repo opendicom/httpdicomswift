@@ -25,15 +25,18 @@ struct ParserMultipart {
     }
     
     
-    mutating func append(buffer: ByteBuffer) {
+    mutating func append(buffer: ByteBuffer, complete: ([MultipartPart]) -> Void  ) {
         var buf = buffer
         guard let received = buf.readBytes(length: buf.readableBytes) else {
             return
         }
         dataAll.append(contentsOf: received)
         data.append(contentsOf: received)
-        if data.starts(with: self.boundary.data(using: String.Encoding.utf8)!){
-            data.removeSubrange(0...self.boundary.count+1)
+        var iterate = true
+        while iterate {
+            if data.starts(with: self.boundary.data(using: String.Encoding.utf8)!){
+                data.removeSubrange(0...self.boundary.count+1)
+            }
             let rangeEndPart = data.range(of: self.boundary.data(using: String.Encoding.utf8)!)
             if rangeEndPart != nil {
                 let partData = data.subdata(in: 0..<rangeEndPart!.lowerBound)
@@ -54,8 +57,10 @@ struct ParserMultipart {
                 multipartParts.append(part)
                 data.removeAll()
             }
-        }else{
-            
+            if rangeEndPart == nil && rangeEndMultipart == nil{
+                iterate = false
+            }
         }
+        complete(self.multipartParts)
     }
 }

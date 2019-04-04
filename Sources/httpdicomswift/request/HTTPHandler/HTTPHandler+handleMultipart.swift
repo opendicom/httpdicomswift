@@ -26,7 +26,15 @@ public extension HTTPHandler {
                 }
             }
         case .body(buffer: var buf):
-            parser?.append(buffer: buf)
+            parser?.append(buffer: buf) { multipartParts in
+                print(multipartParts.count)
+                if multipartParts.count > 0 {
+                    multipartParts.forEach { part in
+                        print(String(data: part.content_type, encoding: String.Encoding.utf8))
+                        print(String(data: part.data, encoding: String.Encoding.utf8))
+                    }
+                }
+            }
             guard let received = buf.readBytes(length: buf.readableBytes) else {
                 return
             }
