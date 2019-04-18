@@ -9,6 +9,8 @@ import Foundation
 
 class K {
     
+    static let shared = K()
+    
     let levels: Array<String>
     let modalities: Array<String>
     let key: Array<String>
@@ -24,16 +26,58 @@ class K {
     let pdfComponentPrefixData: Data
     let pdfComponentSuffixData: Data
     
-    private var _defaultTimezone: String
+    let defaultTimezone: String
     
-    private var _scheme: Dictionary<String, AnyObject>
-    private var _schemeindexes: Dictionary<String, [AnyObject]>
-    private var _code: Dictionary<String, AnyObject>
-    private var _codeindexes: Dictionary<String, [AnyObject]>
-    private var _procedure: Dictionary<String, AnyObject>
-    private var _procedureindexes: Dictionary<String, [AnyObject]>
+    let scheme: Dictionary<String, AnyObject>
+    let schemeindexes: Dictionary<String, [AnyObject]>
+    let code: Dictionary<String, AnyObject>
+    let codeindexes: Dictionary<String, [AnyObject]>
+    let procedure: Dictionary<String, AnyObject>
+    let procedureindexes: Dictionary<String, [AnyObject]>
     
-    init() {
+    private class Config {
+        var defaultTimezone:String?
+        var scheme: Dictionary<String, AnyObject>?
+        var schemeindexes: Dictionary<String, [AnyObject]>?
+        var code: Dictionary<String, AnyObject>?
+        var codeindexes: Dictionary<String, [AnyObject]>?
+        var procedure: Dictionary<String, AnyObject>?
+        var procedureindexes: Dictionary<String, [AnyObject]>?
+    }
+    
+    private static let config = Config()
+    
+    class func setup(
+        defaultTimezone: String,
+        scheme: Dictionary<String, AnyObject>,
+        schemeindexes: Dictionary<String, [AnyObject]>,
+        code: Dictionary<String, AnyObject>,
+        codeindexes: Dictionary<String, [AnyObject]>,
+        procedure: Dictionary<String, AnyObject>,
+        procedureindexes: Dictionary<String, [AnyObject]>
+        )
+    {
+        K.config.scheme = scheme
+        K.config.schemeindexes = schemeindexes
+        K.config.code = code
+        K.config.codeindexes = codeindexes
+        K.config.procedure = procedure
+        K.config.procedureindexes = procedureindexes
+    }
+    
+    private init() {
+        
+        guard K.config.defaultTimezone != nil else {
+            fatalError("Error - you must call setup before accessing K.shared")
+        }
+        
+        defaultTimezone = K.config.defaultTimezone!
+        scheme = K.config.scheme!
+        schemeindexes = K.config.schemeindexes!
+        code = K.config.code!
+        codeindexes = K.config.codeindexes!
+        procedure = K.config.procedure!
+        procedureindexes = K.config.procedureindexes!
         
         levels = ["/patients", "/studies", "/series", "/instances"]
         modalities=["CR","CT","MR","PT","XA","US","MG","RF","DX","EPS"];
@@ -250,21 +294,6 @@ class K {
         pdfComponentPrefixData = "data:application/pdf;base64,".data(using: String.Encoding.utf8)!
         pdfComponentSuffixData = "\"/>".data(using: String.Encoding.utf8)!
         
-        _defaultTimezone = ""
-        
-        _scheme = [:]
-        _schemeindexes = [:]
-        _code = [:]
-        _codeindexes = [:]
-        _procedure = [:]
-        _procedureindexes = [:]
     }
     
-    var defaultTimezone: String {
-        return _defaultTimezone
-    }
-    
-    func setDefault(timeZone: String){
-        _defaultTimezone = timeZone
-    }
 }
