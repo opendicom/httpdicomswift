@@ -29,20 +29,20 @@ class K {
     let defaultTimezone: String
     
     let scheme: Dictionary<String, AnyObject>
-    let schemeindexes: Dictionary<String, [AnyObject]>
+    let schemeIndexes: Dictionary<String, [AnyObject]>
     let code: Dictionary<String, AnyObject>
-    let codeindexes: Dictionary<String, [AnyObject]>
+    let codeIndexes: Dictionary<String, [AnyObject]>
     let procedure: Dictionary<String, AnyObject>
-    let procedureindexes: Dictionary<String, [AnyObject]>
+    let procedureIndexes: Dictionary<String, [AnyObject]>
     
     private class Config {
         var defaultTimezone:String?
         var scheme: Dictionary<String, AnyObject>?
-        var schemeindexes: Dictionary<String, [AnyObject]>?
+        var schemeIndexes: Dictionary<String, [AnyObject]>?
         var code: Dictionary<String, AnyObject>?
-        var codeindexes: Dictionary<String, [AnyObject]>?
+        var codeIndexes: Dictionary<String, [AnyObject]>?
         var procedure: Dictionary<String, AnyObject>?
-        var procedureindexes: Dictionary<String, [AnyObject]>?
+        var procedureIndexes: Dictionary<String, [AnyObject]>?
     }
     
     private static let config = Config()
@@ -50,19 +50,20 @@ class K {
     class func setup(
         defaultTimezone: String,
         scheme: Dictionary<String, AnyObject>,
-        schemeindexes: Dictionary<String, [AnyObject]>,
+        schemeIndexes: Dictionary<String, [AnyObject]>,
         code: Dictionary<String, AnyObject>,
-        codeindexes: Dictionary<String, [AnyObject]>,
+        codeIndexes: Dictionary<String, [AnyObject]>,
         procedure: Dictionary<String, AnyObject>,
-        procedureindexes: Dictionary<String, [AnyObject]>
+        procedureIndexes: Dictionary<String, [AnyObject]>
         )
     {
+        K.config.defaultTimezone = defaultTimezone
         K.config.scheme = scheme
-        K.config.schemeindexes = schemeindexes
+        K.config.schemeIndexes = schemeIndexes
         K.config.code = code
-        K.config.codeindexes = codeindexes
+        K.config.codeIndexes = codeIndexes
         K.config.procedure = procedure
-        K.config.procedureindexes = procedureindexes
+        K.config.procedureIndexes = procedureIndexes
     }
     
     private init() {
@@ -73,11 +74,11 @@ class K {
         
         defaultTimezone = K.config.defaultTimezone!
         scheme = K.config.scheme!
-        schemeindexes = K.config.schemeindexes!
+        schemeIndexes = K.config.schemeIndexes!
         code = K.config.code!
-        codeindexes = K.config.codeindexes!
+        codeIndexes = K.config.codeIndexes!
         procedure = K.config.procedure!
-        procedureindexes = K.config.procedureindexes!
+        procedureIndexes = K.config.procedureIndexes!
         
         levels = ["/patients", "/studies", "/series", "/instances"]
         modalities=["CR","CT","MR","PT","XA","US","MG","RF","DX","EPS"];
