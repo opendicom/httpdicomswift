@@ -24,7 +24,7 @@ for codeFile in codeFiles {
 var procedure = Dictionary<String, AnyObject>()
 var procedureIndexes = Dictionary<String, [AnyObject]>()
 let procedureFiles = try fileManager.contentsOfDirectory(atPath: deployPath + "voc/procedure/")
-for procedureFile in procedureFiles {
+for procedureFile in procedureFiles{
     if procedureFile.hasPrefix("."){
         continue
     }else{
@@ -33,6 +33,22 @@ for procedureFile in procedureFiles {
         procedureIndexes.updateValue([Dictionary.dictionaryOfArray(from: file) as AnyObject], forKey: procedureFile.replacingOccurrences(of: ".plist", with: ""))
     }
 }
+
+let countries = NSArray(contentsOfFile: deployPath + "voc/country.plist")! as Array<AnyObject>
+var iso3166PAIS = Array<String>()
+var iso3166COUNTRY = Array<String>()
+var iso3166AB = Array<String>()
+var iso3166ABC = Array<String>()
+var iso3166XXX = Array<String>()
+for country in countries{
+    iso3166PAIS.append(country[0] as? String ?? "")
+    iso3166COUNTRY.append(country[1] as? String ?? "")
+    iso3166AB.append(country[2] as? String ?? "")
+    iso3166ABC.append(country[3] as? String ?? "")
+    iso3166XXX.append(country[4] as? String ?? "")
+}
+
+var iso3166ByCountry =  [iso3166PAIS, iso3166COUNTRY, iso3166AB, iso3166ABC, iso3166XXX]
 //Default time zone "-0400"
 K.setup(defaultTimezone: "-0400",
         scheme: schema,
@@ -40,7 +56,8 @@ K.setup(defaultTimezone: "-0400",
         code: code,
         codeIndexes: codeIndexes,
         procedure: procedure,
-        procedureIndexes: procedureIndexes)
+        procedureIndexes: procedureIndexes,
+        iso3166: iso3166ByCountry)
 
 print(K.shared.defaultTimezone)
 print(K.shared.scheme)
@@ -49,6 +66,7 @@ print(K.shared.code)
 print(K.shared.codeIndexes)
 print(K.shared.procedure)
 print(K.shared.procedureIndexes)
+print(K.shared.iso3166)
 
 //===----------------------------------------------------------------------===//
 //

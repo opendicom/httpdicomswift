@@ -35,6 +35,8 @@ class K {
     let procedure: Dictionary<String, AnyObject>
     let procedureIndexes: Dictionary<String, [AnyObject]>
     
+    let iso3166: Array<[String]>
+    
     private class Config {
         var defaultTimezone:String?
         var scheme: Dictionary<String, AnyObject>?
@@ -43,6 +45,7 @@ class K {
         var codeIndexes: Dictionary<String, [AnyObject]>?
         var procedure: Dictionary<String, AnyObject>?
         var procedureIndexes: Dictionary<String, [AnyObject]>?
+        var iso3166: Array<[String]>?
     }
     
     private static let config = Config()
@@ -54,7 +57,8 @@ class K {
         code: Dictionary<String, AnyObject>,
         codeIndexes: Dictionary<String, [AnyObject]>,
         procedure: Dictionary<String, AnyObject>,
-        procedureIndexes: Dictionary<String, [AnyObject]>
+        procedureIndexes: Dictionary<String, [AnyObject]>,
+        iso3166: Array<[String]>
         )
     {
         K.config.defaultTimezone = defaultTimezone
@@ -64,6 +68,7 @@ class K {
         K.config.codeIndexes = codeIndexes
         K.config.procedure = procedure
         K.config.procedureIndexes = procedureIndexes
+        K.config.iso3166 = iso3166
     }
     
     private init() {
@@ -79,6 +84,7 @@ class K {
         codeIndexes = K.config.codeIndexes!
         procedure = K.config.procedure!
         procedureIndexes = K.config.procedureIndexes!
+        iso3166 = K.config.iso3166!
         
         levels = ["/patients", "/studies", "/series", "/instances"]
         modalities=["CR","CT","MR","PT","XA","US","MG","RF","DX","EPS"];
