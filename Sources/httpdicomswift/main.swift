@@ -47,8 +47,9 @@ for country in countries{
     iso3166ABC.append(country[3] as? String ?? "")
     iso3166XXX.append(country[4] as? String ?? "")
 }
-
 var iso3166ByCountry =  [iso3166PAIS, iso3166COUNTRY, iso3166AB, iso3166ABC, iso3166XXX]
+
+var personIDTypes = NSDictionary(contentsOfFile: deployPath + "voc/personIDType.plist") as! Dictionary<String,String>
 //Default time zone "-0400"
 K.setup(defaultTimezone: "-0400",
         scheme: schema,
@@ -57,7 +58,8 @@ K.setup(defaultTimezone: "-0400",
         codeIndexes: codeIndexes,
         procedure: procedure,
         procedureIndexes: procedureIndexes,
-        iso3166: iso3166ByCountry)
+        iso3166: iso3166ByCountry,
+        personIDTypes: personIDTypes)
 
 print(K.shared.defaultTimezone)
 print(K.shared.scheme)
@@ -67,6 +69,7 @@ print(K.shared.codeIndexes)
 print(K.shared.procedure)
 print(K.shared.procedureIndexes)
 print(K.shared.iso3166)
+print(K.shared.personIDTypes)
 
 //===----------------------------------------------------------------------===//
 //

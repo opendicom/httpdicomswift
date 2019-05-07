@@ -36,8 +36,10 @@ class K {
     let procedureIndexes: Dictionary<String, [AnyObject]>
     
     let iso3166: Array<[String]>
+    let personIDTypes: Dictionary<String,String>
     
     private class Config {
+        var setUp: Bool = false
         var defaultTimezone:String?
         var scheme: Dictionary<String, AnyObject>?
         var schemeIndexes: Dictionary<String, [AnyObject]>?
@@ -46,6 +48,7 @@ class K {
         var procedure: Dictionary<String, AnyObject>?
         var procedureIndexes: Dictionary<String, [AnyObject]>?
         var iso3166: Array<[String]>?
+        var personIDTypes: Dictionary<String,String>?
     }
     
     private static let config = Config()
@@ -58,9 +61,11 @@ class K {
         codeIndexes: Dictionary<String, [AnyObject]>,
         procedure: Dictionary<String, AnyObject>,
         procedureIndexes: Dictionary<String, [AnyObject]>,
-        iso3166: Array<[String]>
+        iso3166: Array<[String]>,
+        personIDTypes: Dictionary<String,String>
         )
     {
+        K.config.setUp = true
         K.config.defaultTimezone = defaultTimezone
         K.config.scheme = scheme
         K.config.schemeIndexes = schemeIndexes
@@ -69,11 +74,12 @@ class K {
         K.config.procedure = procedure
         K.config.procedureIndexes = procedureIndexes
         K.config.iso3166 = iso3166
+        K.config.personIDTypes = personIDTypes
     }
     
     private init() {
         
-        guard K.config.defaultTimezone != nil else {
+        guard K.config.setUp else {
             fatalError("Error - you must call setup before accessing K.shared")
         }
         
@@ -85,6 +91,7 @@ class K {
         procedure = K.config.procedure!
         procedureIndexes = K.config.procedureIndexes!
         iso3166 = K.config.iso3166!
+        personIDTypes = K.config.personIDTypes!
         
         levels = ["/patients", "/studies", "/series", "/instances"]
         modalities=["CR","CT","MR","PT","XA","US","MG","RF","DX","EPS"];
