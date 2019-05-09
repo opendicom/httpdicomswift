@@ -11,6 +11,24 @@ class K {
     
     static let shared = K()
     
+    // From DRS Class
+    let sqls: Dictionary<String, AnyObject>
+    let pacs: Dictionary<String, AnyObject>
+    let port: Int
+    let defaultPacsOID: String
+    
+    let oid: Dictionary<String, AnyObject>
+    let titles: Dictionary<String, AnyObject>
+    let oidData: Data
+    let titlesData: Data
+    let oidesAeis: Dictionary<String, AnyObject>
+    let titlesAETS: Dictionary<String, AnyObject>
+    let titlesAETSStrings: Dictionary<String, AnyObject>
+    let pacsAETDictionary: Dictionary<String, AnyObject>
+    let localOids: Array<String>
+    let custodianDictionary: Dictionary<String, AnyObject>
+    
+    // From K Class
     let levels: Array<String>
     let modalities: Array<String>
     let key: Array<String>
@@ -49,6 +67,21 @@ class K {
         var procedureIndexes: Dictionary<String, [AnyObject]>?
         var iso3166: Array<[String]>?
         var personIDTypes: Dictionary<String,String>?
+        
+        var sqls: Dictionary<String, AnyObject>?
+        var pacs: Dictionary<String, AnyObject>?
+        var port: Int?
+        var defaultPacsOID: String?
+        var oid: Dictionary<String, AnyObject>?
+        var titles: Dictionary<String, AnyObject>?
+        var oidData: Data?
+        var titlesData: Data?
+        var oidesAeis: Dictionary<String, AnyObject>?
+        var titlesAETS: Dictionary<String, AnyObject>?
+        var titlesAETSStrings: Dictionary<String, AnyObject>?
+        var pacsAETDictionary: Dictionary<String, AnyObject>?
+        var localOids: Array<String>?
+        var custodianDictionary: Dictionary<String, AnyObject>?
     }
     
     private static let config = Config()
@@ -62,7 +95,21 @@ class K {
         procedure: Dictionary<String, AnyObject>,
         procedureIndexes: Dictionary<String, [AnyObject]>,
         iso3166: Array<[String]>,
-        personIDTypes: Dictionary<String,String>
+        personIDTypes: Dictionary<String,String>,
+        sqls: Dictionary<String, AnyObject>,
+        pacs: Dictionary<String, AnyObject>,
+        port: Int,
+        defaultPacsOID: String,
+        oid: Dictionary<String, AnyObject>,
+        titles: Dictionary<String, AnyObject>,
+        oidData: Data,
+        titlesData: Data,
+        oidesAeis: Dictionary<String, AnyObject>,
+        titlesAETS: Dictionary<String, AnyObject>,
+        titlesAETSStrings: Dictionary<String, AnyObject>,
+        pacsAETDictionary: Dictionary<String, AnyObject>,
+        localOids: Array<String>,
+        custodianDictionary: Dictionary<String, AnyObject>
         )
     {
         K.config.setUp = true
@@ -75,6 +122,20 @@ class K {
         K.config.procedureIndexes = procedureIndexes
         K.config.iso3166 = iso3166
         K.config.personIDTypes = personIDTypes
+        K.config.sqls = sqls
+        K.config.pacs = pacs
+        K.config.port = port
+        K.config.defaultPacsOID = defaultPacsOID
+        K.config.oid = oid
+        K.config.titles = titles
+        K.config.oidData = oidData
+        K.config.titlesData = titlesData
+        K.config.oidesAeis = oidesAeis
+        K.config.titlesAETS = titlesAETS
+        K.config.titlesAETSStrings = titlesAETSStrings
+        K.config.pacsAETDictionary = pacsAETDictionary
+        K.config.localOids = localOids
+        K.config.custodianDictionary = custodianDictionary
     }
     
     private init() {
@@ -92,6 +153,21 @@ class K {
         procedureIndexes = K.config.procedureIndexes!
         iso3166 = K.config.iso3166!
         personIDTypes = K.config.personIDTypes!
+        
+        sqls = K.config.sqls!
+        pacs = K.config.pacs!
+        port = K.config.port!
+        defaultPacsOID = K.config.defaultPacsOID!
+        oid = K.config.oid!
+        titles = K.config.titles!
+        oidData = K.config.oidData!
+        titlesData = K.config.titlesData!
+        oidesAeis = K.config.oidesAeis!
+        titlesAETS = K.config.titlesAETS!
+        titlesAETSStrings = K.config.titlesAETSStrings!
+        pacsAETDictionary = K.config.pacsAETDictionary!
+        localOids = K.config.localOids!
+        custodianDictionary = K.config.custodianDictionary!
         
         levels = ["/patients", "/studies", "/series", "/instances"]
         modalities=["CR","CT","MR","PT","XA","US","MG","RF","DX","EPS"];
