@@ -1,7 +1,7 @@
 import Foundation
 /*let server = Server()
 server.listen(11114)*/
-
+/*
 let deployPath = "/Users/Shared/GitHub/httpdicom/deploy/"
 let fileManager = FileManager.default
 
@@ -40,13 +40,13 @@ var iso3166COUNTRY = Array<String>()
 var iso3166AB = Array<String>()
 var iso3166ABC = Array<String>()
 var iso3166XXX = Array<String>()
-for country in countries{
-    iso3166PAIS.append(country[0] as? String ?? "")
-    iso3166COUNTRY.append(country[1] as? String ?? "")
-    iso3166AB.append(country[2] as? String ?? "")
-    iso3166ABC.append(country[3] as? String ?? "")
-    iso3166XXX.append(country[4] as? String ?? "")
-}
+//for country in countries{
+ //   iso3166PAIS.append(country[0] as? String ?? "")
+ //   iso3166COUNTRY.append(country[1] as? String ?? "")
+ //   iso3166AB.append(country[2] as? String ?? "")
+ //   iso3166ABC.append(country[3] as? String ?? "")
+ //   iso3166XXX.append(country[4] as? String ?? "")
+//}
 
 var iso3166ByCountry =  [iso3166PAIS, iso3166COUNTRY, iso3166AB, iso3166ABC, iso3166XXX]
 //Default time zone "-0400"
@@ -67,7 +67,7 @@ print(K.shared.codeIndexes)
 print(K.shared.procedure)
 print(K.shared.procedureIndexes)
 print(K.shared.iso3166)
-
+*/
 //===----------------------------------------------------------------------===//
 //
 // This source file is part of the SwiftNIO open source project
@@ -190,6 +190,6 @@ print("Server started and listening on \(localAddress), htdocs path \(htdocs)")
 
 // This will never unblock as we don't close the ServerChannel
 try channel.closeFuture.wait()
-
-print("Server closed")
 */
+print("Server closed")
+
